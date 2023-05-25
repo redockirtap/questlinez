@@ -1,11 +1,12 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, except: %i[index show]
 
   def new
   end
 
   def create
     if answer.update(answer_params)
-      redirect_to answer_path(answer)
+      redirect_to answer_path(answer), notice: 'Your answer is created.'
     else
       render :new
     end
