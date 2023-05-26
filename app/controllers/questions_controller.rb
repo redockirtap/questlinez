@@ -38,10 +38,18 @@ class QuestionsController < ApplicationController
 
   private
 
-  helper_method :question
+  helper_method :questions, :question, :answer
+
+  def questions
+    @questions = Question.all
+  end
 
   def question
     @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+  end
+
+  def answer
+    question.answers.new
   end
 
   def question_params
