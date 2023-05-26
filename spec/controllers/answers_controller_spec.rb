@@ -27,9 +27,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { subject }.to_not change(Answer, :count)
       end
 
-      it 're-renders new answer view' do
+      it 'renders current question view' do
         subject
-        expect(response).to render_template :new
+        expect(response).to render_template 'questions/show'
       end
     end
   end

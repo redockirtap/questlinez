@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'debug'
 
 feature 'User can create an answer', %q{
   In order to help the community
@@ -14,12 +15,13 @@ feature 'User can create an answer', %q{
       sign_in(user)
   
       visit question_path(question)
-      click_on 'Answer the question'
     end
   
     scenario 'answer the question' do
+      # debugger
       fill_in 'Body', with: 'Answering text text text'
       click_on 'Create Answer'
+
   
       expect(page).to have_content 'Your answer is created.'
       expect(page).to have_content 'Answering text text text'
@@ -36,7 +38,8 @@ feature 'User can create an answer', %q{
   describe 'Unathenticated user' do
     scenario 'tries to answer the question' do
       visit question_path(question)
-      click_on 'Answer the question'
+      fill_in 'Body', with: 'Answering text text text'
+      click_on 'Create Answer'
 
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end

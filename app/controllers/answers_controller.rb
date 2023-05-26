@@ -6,9 +6,9 @@ class AnswersController < ApplicationController
 
   def create
     if answer.update(answer_params)
-      redirect_to answer_path(answer), notice: 'Your answer is created.'
+      redirect_to question_path(answer.question), notice: 'Your answer is created.'
     else
-      render :new
+      render 'questions/show'
     end
   end
 
