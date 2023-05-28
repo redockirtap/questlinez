@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to @question, notice: 'Your question is created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class QuestionsController < ApplicationController
     if question.update(question_params)
       redirect_to @question
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

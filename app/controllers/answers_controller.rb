@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
     if answer.update(answer_params)
       redirect_to question_path(answer.question), notice: 'Your answer is created.'
     else
-      render 'questions/show'
+      render 'questions/show', status: :unprocessable_entity
     end
   end
 
@@ -21,7 +21,7 @@ class AnswersController < ApplicationController
     if answer.update(answer_params)
       redirect_to answer_path(answer)
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
