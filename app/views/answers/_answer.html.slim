@@ -1,5 +1,7 @@
 
-- question.answers.each do |answer|
-  p= answer.body
-  - if user_signed_in? && current_user.author?(answer)
-    = button_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }
+- if question.answers.count > 0
+  - question.answers.each do |answer|
+    p= answer.body if answer.persisted?
+
+    - if user_signed_in? && current_user.author?(answer)
+      = button_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }
