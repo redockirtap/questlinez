@@ -1,9 +1,10 @@
 require 'rails_helper'
+require 'debug'
 
 RSpec.describe AnswersController, type: :controller do
-  let!(:question) { create(:question) }
-  let!(:answer) { create(:answer, question:) }
   let(:user) { create(:user) }
+  let(:question) { create(:question, user:) }
+  let!(:answer) { create(:answer, question:, user:) }
 
   describe 'POST #create' do
     before { login(user) }
