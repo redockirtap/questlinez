@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'debug'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }

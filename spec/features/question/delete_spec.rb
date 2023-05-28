@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'debug'
 
 feature 'Authenticated User can delete own questions', "
   In order to manage my questions

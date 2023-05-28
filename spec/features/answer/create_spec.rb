@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'debug'
 
 feature 'User can create an answer', "
   In order to help the community
@@ -19,7 +18,6 @@ feature 'User can create an answer', "
     end
 
     scenario 'answer the question' do
-      # debugger
       fill_in 'Body', with: 'Answering text text text'
       click_on 'Create Answer'
 
