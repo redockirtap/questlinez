@@ -1,0 +1,11 @@
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'config/initializers/*'
+    - 'db/schema.rb'
+
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context', 'scenario', 'feature']
+
+Style/Documentation:
+  Enabled: false

@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
 
-  def new
-  end
+  def new; end
 
   def create
     answer.user = current_user
@@ -14,8 +15,7 @@ class AnswersController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if answer.update(answer_params)

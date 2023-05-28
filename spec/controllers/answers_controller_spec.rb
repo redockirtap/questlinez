@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'debug'
 
@@ -74,7 +76,7 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     before { login(user) }
-    
+
     it 'deletes the answer' do
       expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
     end

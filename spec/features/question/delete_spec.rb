@@ -1,18 +1,18 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'debug'
 
-feature 'Authenticated User can delete own questions', %q{
+feature 'Authenticated User can delete own questions', "
   In order to manage my questions
   As an authenticated user
   I'd like to be able to delete my questions
-} do
-
+" do
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given(:question) { create(:question, user:) }
 
   describe 'Authenticated user' do
-  
     scenario 'can delete their question' do
       sign_in(user)
       visit question_path(question)
@@ -29,7 +29,6 @@ feature 'Authenticated User can delete own questions', %q{
     end
   end
 
-  
   describe 'Unathenticated user' do
     scenario 'can not delete questions' do
       visit question_path(question)
