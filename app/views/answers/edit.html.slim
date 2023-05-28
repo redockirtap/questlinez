@@ -1,6 +1,6 @@
 edit the present question
 
-= form_with model: answer do |f|
+= form_with model: answer, local: true do |f|
   = f.label :body
   = f.text_field :body
 
