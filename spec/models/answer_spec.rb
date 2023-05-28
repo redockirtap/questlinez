@@ -5,9 +5,11 @@ require 'rails_helper'
 RSpec.describe Answer, type: :model do
   context 'Database table' do
     it { is_expected.to have_db_index(:question_id) }
+    it { is_expected.to have_db_index(:user_id) }
   end
 
   context 'Model association' do
+    it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:question) }
   end
 
