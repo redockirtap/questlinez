@@ -1,2 +1,11 @@
-- if user_signed_in?
-  = button_to 'Log out', destroy_user_session_path, method: :delete
+.h-12.bg-bg-main.border-t-2.border-orange-500.fixed.top-0.inset-x-0.z-50.mx-auto
+  .border-b.border-border-main.flex.justify-around.items-center.h-full
+    .hero.hover:bg-gray-500/25.self-stretch.flex.items-center.px-1.ml-2.col-span-2
+      == link_to root_path do
+        .text-main-text.text-xl
+          'quest<b>linez</b>
+    .col-span-4
+      - if user_signed_in?
+        = button_to 'Log out', destroy_user_session_path, method: :delete, class: 'btn-primary'
+      -else
+        = button_to 'Log in', new_user_session_path, method: :get, class: 'btn-primary'

@@ -3,5 +3,5 @@
   - question.answers.each do |answer|
     p= answer.body if answer.persisted?
 
-    - if user_signed_in? && current_user.author?(answer)
-      = button_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }
+    - if user_signed_in? && current_user.author?(answer) && answer.persisted?
+      = button_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn-primary'

@@ -1,5 +1,19 @@
-p= link_to 'Ask question', new_question_path
+
+
+.flex.justify-around.h-16.items-center
+  'Top Questions
+  p= button_to 'Ask question', new_question_path, method: :get, class: 'btn-primary'
 
 - questions.each do |question|
-  p= link_to question.title, question_path(question)
-  p= question.body
+  .border-t.border-border-main.flex.basis-0.justify-between.gap-4.p-4
+
+    .stats.flex-none.text-start
+      p= 'votes'
+      p= 'answers'
+    .content.text-start.flex-1.w-64
+
+      h2= link_to question.title, question_path(question)
+
+      .summary.flex.gap-2
+        p= 'tags'
+        p= question.user ? question.user.email : 'author'
