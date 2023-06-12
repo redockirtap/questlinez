@@ -1,0 +1,2 @@
+<%= turbo_stream.replace answer, partial: "answers/answer", locals: { answer: answer, question: answer.question } %>
+<%= turbo_stream.prepend "flash", partial: "shared/flash" %>

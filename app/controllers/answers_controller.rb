@@ -19,7 +19,10 @@ class AnswersController < ApplicationController
 
   def update
     if answer.update(answer_params)
-      redirect_to answer_path(answer)
+      respond_to do |format|
+        format.html { redirect_to question_path(answer.question) }
+        format.turbo_stream { flash.now[:notice] = 'Your answer is updated.' }
+      end
     else
       render :edit, status: :unprocessable_entity
     end
@@ -27,7 +30,11 @@ class AnswersController < ApplicationController
 
   def destroy
     answer.destroy
-    redirect_to question_path(answer.question), notice: 'Answer is deleted.'
+
+    respond_to do |format|
+      format.html { redirect_to question_path(answer.question) }
+      format.turbo_stream { flash.now[:notice] = 'Your answer is deleted.' }
+    end
   end
 
   private

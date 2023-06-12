@@ -2,7 +2,8 @@
   h1= question.title
   h3= question.body
 
-  = render question.answers
+
+  .answers= render question.answers.order_desc
   = render 'answers/new'
 
   - if user_signed_in? && current_user.author?(question)
