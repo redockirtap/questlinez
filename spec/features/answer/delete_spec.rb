@@ -11,23 +11,26 @@ feature 'Authenticated User can delete own answers', "
   given(:another_user) { create(:user) }
   given(:question) { create(:question, user:) }
   given(:answer) { create(:answer, question:, user:) }
+  given!(:another_answer) { create(:answer, question:, user: another_user) }
 
-  background { post_answer(answer) }
+  describe 'Authenticated user', js: true do
+    background { sign_in user }
+    background { post_answer(answer) }
 
-  describe 'Authenticated user' do
-    scenario 'can delete their answer' do
-      sign_in(user)
-      visit question_path(question)
-      click_on 'Delete Answer'
+    scenario 'can delete the answer' do
+      within "#answer_#{answer.id}" do
+        click_on 'Delete Answer'
+      end
 
-      expect(page).to have_content 'Answer is deleted.'
+      expect(page).to have_content 'Your answer is deleted.'
     end
 
     scenario "can not delete another's answer" do
-      sign_in(another_user)
       visit question_path(question)
 
-      expect(page).to_not have_content 'Delete Answer'
+      within "#answer_#{another_answer.id}" do
+        expect(page).to_not have_content 'Delete Answer'
+      end
     end
   end
 

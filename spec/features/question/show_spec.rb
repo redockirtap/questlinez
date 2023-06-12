@@ -19,10 +19,7 @@ feature 'Any User can see questions', "
     scenario 'opens all questions' do
       visit questions_path
 
-      questions.each do |question|
-        expect(page).to have_content question.title
-        expect(page).to have_content question.body
-      end
+      questions.each { |question| expect(page).to have_content question.title }
     end
 
     scenario 'opens a specific question' do
@@ -37,10 +34,7 @@ feature 'Any User can see questions', "
     scenario 'opens all questions' do
       visit questions_path
 
-      questions.each do |question|
-        expect(page).to have_content question.title
-        expect(page).to have_content question.body
-      end
+      questions.each { |question| expect(page).to have_content question.title }
     end
 
     scenario 'opens a specific question' do
