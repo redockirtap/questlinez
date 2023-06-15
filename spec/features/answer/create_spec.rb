@@ -32,7 +32,7 @@ feature 'User can create an answer', "
     end
   end
 
-  describe 'Unathenticated user' do
+  describe 'Unathenticated user', js: true do
     scenario 'tries to answer the question' do
       visit question_path(question)
       fill_in 'Body', with: 'Answering text text text'

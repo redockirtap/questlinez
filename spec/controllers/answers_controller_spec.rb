@@ -7,6 +7,8 @@ RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question, user:) }
   let!(:answer) { create(:answer, question:, user:) }
 
+  render_views
+
   describe 'POST #create' do
     before { login(user) }
 
@@ -41,25 +43,28 @@ RSpec.describe AnswersController, type: :controller do
 
     context 'with valid attributes' do
       it 'assigns the requested answer to @answer' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }
+        patch :update, params: { id: answer, answer: attributes_for(:answer) }, as: :turbo_stream
         expect(assigns(:answer)).to eq answer
       end
 
       it 'changes answer attributes' do
-        patch :update, params: { id: answer, answer: { body: 'changed title' } }
+        patch :update, params: { id: answer, answer: { body: 'changed title' } }, as: :turbo_stream
         answer.reload
 
         expect(answer.body).to eq 'changed title'
       end
 
-      it 'redirects to updated answer view' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }
-        expect(response).to redirect_to answer.question
+      it 'rerenders updated answer' do
+        patch :update, params: { id: answer, answer: attributes_for(:answer) }, as: :turbo_stream
+
+        expect(response.media_type).to eq Mime[:turbo_stream]
+        expect(response).to render_template(layout: false)
+        expect(response.body).to include("<turbo-stream action=\"replace\" target=\"answer_#{answer.id}\">")
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) } }
+      before { patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, as: :turbo_stream }
 
       it 'doesn\'t change the answer' do
         answer.reload
@@ -80,8 +85,11 @@ RSpec.describe AnswersController, type: :controller do
       expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
     end
     it 'redirects to question' do
-      delete :destroy, params: { id: answer }
-      expect(response).to redirect_to question_path(answer.question)
+      delete :destroy, params: { id: answer }, as: :turbo_stream
+
+      expect(response.media_type).to eq Mime[:turbo_stream]
+      expect(response).to render_template(layout: false)
+      expect(response.body).to include('<turbo-stream action="prepend" target="flash">')
     end
   end
 end

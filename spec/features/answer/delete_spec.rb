@@ -34,7 +34,7 @@ feature 'Authenticated User can delete own answers', "
     end
   end
 
-  describe 'Unathenticated user' do
+  describe 'Unathenticated user', js: true do
     scenario 'can not delete answers' do
       visit question_path(question)
 

@@ -15,9 +15,10 @@ feature 'Authenticated User can edit own answers', "
 
   describe 'Authenticated user', js: true do
     background { sign_in user }
-    background { post_answer(answer) }
 
     scenario 'can edit the answer' do
+      post_answer(answer)
+
       within "#answer_#{answer.id}" do
         click_on 'Edit'
         fill_in 'Body', with: 'Answer is edited.'
@@ -32,13 +33,15 @@ feature 'Authenticated User can edit own answers', "
     end
 
     scenario "can not edit another's answer" do
+      post_answer(another_answer)
+
       within "#answer_#{another_answer.id}" do
         expect(page).to_not have_content 'Edit'
       end
     end
   end
 
-  describe 'Unathenticated user' do
+  describe 'Unathenticated user', js: true do
     scenario 'can not edit answers' do
       visit question_path(question)
 

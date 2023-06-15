@@ -18,17 +18,18 @@ class AnswersController < ApplicationController
   def edit; end
 
   def update
-    if answer.update(answer_params)
+    if answer.update(answer_params) && current_user.author?(answer)
       respond_to do |format|
-        format.html { redirect_to question_path(answer.question) }
         format.turbo_stream { flash.now[:notice] = 'Your answer is updated.' }
       end
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity, formats: :html
     end
   end
 
   def destroy
+    return unless current_user.author?(answer)
+
     answer.destroy
 
     respond_to do |format|

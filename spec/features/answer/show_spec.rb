@@ -11,7 +11,7 @@ feature 'Any User can see answers', "
   given(:question) { create(:question) }
   given!(:answers) { create_list(:answer, 3, question:) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
     end
@@ -23,7 +23,7 @@ feature 'Any User can see answers', "
     end
   end
 
-  describe 'Unathenticated user' do
+  describe 'Unathenticated user', js: true do
     scenario 'opens all answers' do
       visit question_path(question)
 
