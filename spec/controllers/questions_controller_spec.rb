@@ -3,12 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
   let(:user) { create(:user) }
+  let(:question) { create(:question, user:) }
+
+  render_views
 
   describe 'GET #index' do
     before { login(user) }
-    let(:questions) { create_list(:question, 3) }
+    let!(:questions) { create_list(:question, 3, user:) }
 
     before { get :index }
 
@@ -81,25 +83,28 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :turbo_stream
         expect(assigns(:question)).to eq question
       end
 
       it 'changes question attributes' do
-        patch :update, params: { id: question, question: { title: 'changed title' } }
+        patch :update, params: { id: question, question: { title: 'changed title' } }, format: :turbo_stream
         question.reload
 
         expect(question.title).to eq 'changed title'
       end
 
       it 'redirects to updated question view' do
-        patch :update, params: { id: question, question: attributes_for(:question) }
-        expect(response).to redirect_to question
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :turbo_stream
+
+        expect(response.media_type).to eq Mime[:turbo_stream]
+        expect(response).to render_template(layout: false)
+        expect(response.body).to include("<turbo-stream action=\"replace\" target=\"question_#{question.id}\">")
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) } }
+      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :turbo_stream }
 
       it 'doesn\'t change the question' do
         question.reload
@@ -116,7 +121,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     before { login(user) }
-    let!(:question) { create(:question) }
+    let!(:question) { create(:question, user:) }
 
     it 'deletes the question' do
       expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)

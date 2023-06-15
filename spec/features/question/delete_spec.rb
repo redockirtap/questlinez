@@ -10,10 +10,12 @@ feature 'Authenticated User can delete own questions', "
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given(:question) { create(:question, user:) }
+  given(:another_question) { create(:question, user: another_user) }
 
   describe 'Authenticated user' do
-    scenario 'can delete their question' do
-      sign_in(user)
+    background { sign_in user }
+
+    scenario 'can delete the question' do
       visit question_path(question)
       click_on 'Delete'
 
@@ -21,8 +23,7 @@ feature 'Authenticated User can delete own questions', "
     end
 
     scenario "can not delete another's question" do
-      sign_in(another_user)
-      visit question_path(question)
+      visit question_path(another_question)
 
       expect(page).to_not have_content 'Delete'
     end

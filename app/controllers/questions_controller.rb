@@ -25,14 +25,18 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def update
-    if question.update(question_params)
-      redirect_to @question
+    if question.update(question_params) && current_user.author?(question)
+      respond_to do |format|
+        format.turbo_stream { flash.now[:notice] = 'Your question is updated.' }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity, formats: :html
     end
   end
 
   def destroy
+    return unless current_user.author?(question)
+
     question.destroy
     redirect_to questions_path, notice: 'Question is deleted.'
   end

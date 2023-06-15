@@ -1,10 +1,5 @@
 - if question.persisted?
-  h1= question.title
-  h3= question.body
-
+  = render question
 
   .answers= render question.answers.order_desc
   = render 'answers/new'
-
-  - if user_signed_in? && current_user.author?(question)
-    = button_to 'Delete', question_path(question), method: :delete, data: { confirm: 'Are you sure?' }

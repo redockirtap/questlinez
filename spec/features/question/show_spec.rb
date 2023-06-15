@@ -11,7 +11,7 @@ feature 'Any User can see questions', "
   given(:question) { create(:question) }
   given!(:questions) { create_list(:question, 3) }
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', js: true do
     background do
       sign_in(user)
     end
@@ -30,7 +30,7 @@ feature 'Any User can see questions', "
     end
   end
 
-  describe 'Unathenticated user' do
+  describe 'Unathenticated user', js: true do
     scenario 'opens all questions' do
       visit questions_path
 

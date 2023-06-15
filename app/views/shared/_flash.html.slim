@@ -1,5 +1,2 @@
 - flash.each do |key, message|
-  - if key == 'notice'
-    = content_tag :p, message, class: "flex p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-bg-main-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800", role: "alert"
-  - else
-    = content_tag :p, message, role: "alert" 
+  = content_tag :p, message, class: "flex p-4 mb-4 text-blue-800 border-t-4 border-blue-300 bg-bg-main-50 dark:text-blue-400 dark:bg-gray-800 dark:border-blue-800", role: "notice"

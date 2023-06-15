@@ -34,7 +34,7 @@ feature 'User can create a question', "
     end
   end
 
-  describe 'Unathenticated user' do
+  describe 'Unathenticated user', js: true do
     scenario 'tries to ask a question' do
       visit questions_path
       click_on 'Ask question'

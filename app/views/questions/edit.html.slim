@@ -1,8 +1,3 @@
-= form_with model: question do |f|
-  = f.label :title
-  = f.text_field :title
-
-  = f.label :body
-  = f.text_field :body
-
-  = f.submit
+= turbo_frame_tag question do
+  = render 'shared/errors', resource: question
+  = render "form", question: question
