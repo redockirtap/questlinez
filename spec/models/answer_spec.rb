@@ -16,4 +16,15 @@ RSpec.describe Answer, type: :model do
   context 'Model validation' do
     it { is_expected.to validate_presence_of :body }
   end
+
+  context 'Model methods' do
+    let(:user) { create(:user) }
+    let(:another_user) { create(:user) }
+    let(:question) { create(:question, user:) }
+    let!(:answer) { create(:answer, question:, user:) }
+
+    it 'assigns the best answer for the question' do
+      expect(question.answers[0].set_best).to be(true)
+    end
+  end
 end

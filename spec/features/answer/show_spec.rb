@@ -21,6 +21,9 @@ feature 'Any User can see answers', "
 
       answers.each { |answer| expect(page).to have_content answer.body }
     end
+
+    scenario 'sees the best answer at first' do
+    end
   end
 
   describe 'Unathenticated user', js: true do
@@ -28,6 +31,9 @@ feature 'Any User can see answers', "
       visit question_path(question)
 
       answers.each { |answer| expect(page).to have_content answer.body }
+    end
+
+    scenario 'sees the best answer at first' do
     end
   end
 end

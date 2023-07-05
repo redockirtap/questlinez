@@ -1,10 +1,14 @@
-
 = turbo_frame_tag answer do
-  - if question.answers.count > 0
+  - if answer.question.answers.count > 0
+      
     p= answer.body if answer.persisted?
+    p= answer.best
 
-    - if user_signed_in? && current_user.author?(answer) && answer.persisted?
-      .flex.gap-6.items-center.justify-center
+    .flex.gap-6.items-center.justify-center
+      - if user_signed_in? && current_user.author?(answer) && answer.persisted?
         = link_to 'Edit', edit_answer_path(answer)
 
         = button_to 'Delete Answer', answer_path(answer), method: :delete, data: { confirm: 'Are you sure?' }
+
+      - if user_signed_in? && current_user.author?(answer.question)
+        = button_to 'Best Answer', choose_best_answer_path(answer), method: :patch

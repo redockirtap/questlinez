@@ -16,7 +16,6 @@ feature 'Authenticated User can edit own questions', "
     background { sign_in user }
 
     scenario 'can edit the question' do
-      sleep(1)
       visit question_path(question)
 
       within "#question_#{question.id}" do
@@ -33,7 +32,6 @@ feature 'Authenticated User can edit own questions', "
     end
 
     scenario "can not edit question with errors" do
-      sleep(1)
       visit question_path(question)
 
       within "#question_#{question.id}" do

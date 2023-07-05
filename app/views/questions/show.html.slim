@@ -1,5 +1,5 @@
 - if question.persisted?
   = render question
 
-  .answers= render question.answers.order_desc
+  = render 'questions/answers_list'
   = render 'answers/new'

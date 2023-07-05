@@ -28,13 +28,24 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    return unless current_user.author?(answer)
+    if current_user.author?(answer)
+      answer.destroy
+      respond_to do |format|
+        format.turbo_stream { flash.now[:notice] = 'Your answer is deleted.' }
+      end
+    else
+      render :edit, status: :unprocessable_entity, formats: :html
+    end
+  end
 
-    answer.destroy
-
-    respond_to do |format|
-      format.html { redirect_to question_path(answer.question) }
-      format.turbo_stream { flash.now[:notice] = 'Your answer is deleted.' }
+  def choose_best
+    if current_user.author?(answer.question)
+      answer.set_best
+      respond_to do |format|
+        format.turbo_stream { flash.now[:notice] = 'You chose the best answer.' }
+      end
+    else
+      render 'questions/show', locals: { question: answer.question }, status: :unprocessable_entity, formats: :html
     end
   end
 
@@ -47,7 +58,7 @@ class AnswersController < ApplicationController
   end
 
   def question
-    @question ||= Question.find(params[:question_id])
+    @question ||= Question.find(params[:question_id]) if params[:question_id]
   end
 
   def answer_params

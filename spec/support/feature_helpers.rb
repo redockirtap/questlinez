@@ -8,6 +8,7 @@ module FeatureHelpers
       fill_in 'Password', with: user.password
       click_on 'Log in'
     end
+    expect(page).to have_text("Signed in successfully.")
   end
 
   def post_answer(answer)
