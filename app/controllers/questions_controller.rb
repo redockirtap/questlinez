@@ -9,7 +9,9 @@ class QuestionsController < ApplicationController
 
   def show; end
 
-  def new; end
+  def new
+    question.links.build # create association with link model
+  end
 
   def create
     @question = Question.new(question_params)
@@ -58,6 +60,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body,
+                                     files: [], links_attributes: [:name, :url])
   end
 end
