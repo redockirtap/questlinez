@@ -29,7 +29,9 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def update
-    if question.update(question_params) && current_user.author?(question)
+    update_files
+
+    if question.update(update_question_params) && current_user.author?(question)
       respond_to do |format|
         format.turbo_stream { flash.now[:notice] = 'Your question is updated.' }
       end
@@ -61,8 +63,22 @@ class QuestionsController < ApplicationController
     @answer ||= question.answers.new
   end
 
+  def update_files
+    question.files.attach(files_params[:files]) if files_params[:files].size >= 2
+  end
+
+  def files_params
+    params.require(:question).permit(files: [])
+  end
+
+  def update_question_params
+    params.require(:question).permit(:title, :body,
+                                     links_attributes: %i[name url _destroy])
+  end
+
   def question_params
     params.require(:question).permit(:title, :body,
-                                     files: [], links_attributes: [:name, :url, :_destroy])
+                                     files: [],
+                                     links_attributes: %i[name url _destroy])
   end
 end
