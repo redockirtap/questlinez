@@ -5,4 +5,11 @@
   = f.label :body
   = f.text_field :body
 
+  = f.fields_for :links do |l|
+    = l.label :name, 'Link name'
+    = l.text_field :name
+
+    = l.label :url
+    = l.text_field :url
+
   = f.submit class: 'btn-primary'

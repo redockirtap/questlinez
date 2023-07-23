@@ -4,6 +4,11 @@
     p= answer.body if answer.persisted?
     p= answer.best
 
+    - if answer.links.present?
+      ='Sources:'
+      - answer.links.each do |link|
+        p= link_to link.name, link.url
+
     .flex.gap-6.items-center.justify-center
       - if user_signed_in? && current_user.author?(answer) && answer.persisted?
         = link_to 'Edit', edit_answer_path(answer)

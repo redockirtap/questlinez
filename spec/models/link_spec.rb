@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Link, type: :model do
   context 'Model association' do
-    it { is_expected.to belong_to(:question) }
+    it { is_expected.to belong_to(:linkable) }
   end
 
   context 'Model validation' do

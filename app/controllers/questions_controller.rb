@@ -7,7 +7,9 @@ class QuestionsController < ApplicationController
     @questions = Question.all
   end
 
-  def show; end
+  def show
+    answer.links.build
+  end
 
   def new
     question.links.build # create association with link model
@@ -56,7 +58,7 @@ class QuestionsController < ApplicationController
   end
 
   def answer
-    question.answers.new
+    @answer ||= question.answers.new
   end
 
   def question_params
