@@ -1,0 +1,12 @@
+div class="nested-form-wrapper" data-new-record="#{l.object.new_record?}"
+  = l.label :name, 'Link name'
+  = l.text_field :name
+
+  = l.label :url
+  = l.text_field :url
+
+  button type="button" data-action="nested-form#remove" 
+    'Remove Link
+
+  = l.hidden_field :_destroy
+

@@ -1,15 +1,22 @@
 .answer-errors
   = render 'shared/errors', resource: answer
 
-= form_with model: [question, answer] do |f|
+= form_with model: [question, answer], data: { controller: 'nested-form',
+                                               nested_form_wrapper_selector_value: '.nested-form-wrapper' } do |f|
   = f.label :body
   = f.text_field :body
 
-  = f.fields_for :links do |l|
-    = l.label :name, 'Link name'
-    = l.text_field :name
+  template data-nested-form-target="template"
+    = f.fields_for :links, Link.new, child_index: 'NEW_RECORD' do |link|
+      = render "shared/add_link", l: link
 
-    = l.label :url
-    = l.text_field :url
+
+  = f.fields_for :links do |link|
+      = render "shared/add_link", l: link
+  
+  div data-nested-form-target="target"
+
+  button type="button" data-action="nested-form#add"
+    'Add Link
 
   = f.submit class: 'btn-primary'
