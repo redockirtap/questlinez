@@ -1,5 +1,8 @@
-= turbo_frame_tag question do
-    h1= question.title
+= turbo_frame_tag question do 
+  
+    .text-2xl.text-start.px-6.py-4
+      p= question.title
+
     h3= question.body
     - if question.files.attached?
       - question.files.each do |file|
